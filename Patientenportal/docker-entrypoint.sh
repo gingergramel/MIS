@@ -1,7 +1,9 @@
-sleep 2
+#!/bin/bash
+set -e
+
+echo "Running Django migrations..."
 python manage.py makemigrations
 python manage.py migrate
 
-
-
-python -m uvicorn --host 0.0.0.0 --port 8000 Patientenportal.asgi:application
+echo "Starting Django application..."
+python -m uvicorn --host 0.0.0.0 --port 8000 mysite.asgi:application
