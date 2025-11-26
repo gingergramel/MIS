@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Nachrichten an Ihren Arzt</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>Ihre Nachricht:</label>
+        <textarea class="form-input" name="message" rows="4" required></textarea>
+    </div>
+    <button type="submit" class="button">Senden</button>
+    <a href="{% url 'patient_dashboard' %}" class="button" style="background-color: lightgrey;">Zurück zur Übersicht</a>
+</form>
+
+<h3>Nachrichtenverlauf</h3>
+<div class="messages-list">
+    {% for message in messages %}
+    <div class="message{% if message.sender_is_practitioner %} from-practitioner{% endif %}{% if not message.read_by_patient and message.sender_is_practitioner %} unread{% endif %}">
+        <div class="message-date">{{ message.timestamp|date:"d.m.Y H:i" }}</div>
+        <div class="message-sender">{% if message.sender_is_practitioner %}Arzt{% else %}Sie{% endif %}</div>
+        <div class="message-content">{{ message.content }}</div>
+        <br>
+    </div>
+    {% empty %}
+    <p>Noch keine Nachrichten vorhanden.</p>
+    {% endfor %}
+</div>
+
+{% if status %}
+<div class="status-message">
+    {{ status }}
+</div>
+{% endif %}
+{% endblock %}

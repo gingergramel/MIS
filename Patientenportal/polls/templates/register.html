@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div>
+    <form method="post">
+        {% csrf_token %}
+        <input class="form-input" type="text" name="username" placeholder="Username">
+        <input class="form-input" type="email" name="email" placeholder="Email">
+        <input class="form-input" type="password" name="password" placeholder="Password">
+        <input class="form-input" type ="text" name="SVNR" placeholder="SVNR">
+        <input class="form-input" type ="date" name="Geburtsdatum" placeholder="Geburtsdatum">
+        <button class="button" type="submit">Registrieren</button>
+        
+    </form>
+
+    <div>
+        {{ registration_status }}
+    </div>
+
+</div>
+
+{% endblock content %}

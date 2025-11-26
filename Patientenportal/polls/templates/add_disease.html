@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="
+  max-width: 700px;
+  margin: 3em auto;
+  background: #fff;
+  padding: 2em 3em;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+">
+  <h2 style="color:#2b6cb0; margin-bottom:0.5em;">Neue Krankheit / Behandlungsplan</h2>
+  <p style="color:#555; margin-bottom:1.5em;">
+    für <strong>{{ patient.user.first_name }} {{ patient.user.last_name }}</strong>
+  </p>
+
+  <form method="post" style="display:flex; flex-direction:column; gap:1.2em;">
+    {% csrf_token %}
+    <div>
+      <label for="id_title" style="font-weight:600; color:#2b6cb0;">Krankheit / Diagnose</label><br>
+      {{ form.title }}
+    </div>
+
+    <div>
+      <label for="id_description" style="font-weight:600; color:#2b6cb0;">Behandlungsplan / Beschreibung</label><br>
+      {{ form.description }}
+    </div>
+
+    <div style="margin-top:1.5em;">
+      <button type="submit" style="
+        background-color:#2b6cb0;
+        color:white;
+        border:none;
+        border-radius:8px;
+        padding:10px 18px;
+        font-size:1em;
+        cursor:pointer;
+        transition:background-color 0.2s;
+      ">
+        💾 Speichern
+      </button>
+
+      <a href="{% url 'practitioner_dashboard' %}" style="
+        background-color:#e2e8f0;
+        color:#2d3748;
+        padding:10px 18px;
+        border-radius:8px;
+        text-decoration:none;
+        margin-left:0.7em;
+        font-weight:500;
+        transition:background-color 0.2s;
+      " onmouseover="this.style.backgroundColor='#cbd5e0'" onmouseout="this.style.backgroundColor='#e2e8f0'">
+        Abbrechen
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

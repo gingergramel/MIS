@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Persönliche Daten bearbeiten</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label>Vorname</label>
+        <input class="form-input" type="text" name="first_name" value="{{ user.first_name }}" required>
+    </div>
+    <div class="form-group">
+        <label>Nachname</label>
+        <input class="form-input" type="text" name="last_name" value="{{ user.last_name }}" required>
+    </div>
+    <div class="form-group">
+        <label>E-Mail</label>
+        <input class="form-input" type="email" name="email" value="{{ user.email }}" required>
+    </div>
+    <div class="form-group">
+        <label>Geburtsdatum</label>
+        <input class="form-input" type="date" name="date_of_birth" value="{{ patient.date_of_birth|date:'Y-m-d' }}" required>
+    </div>
+    <div class="form-group">
+        <label>Adresse</label>
+        <input class="form-input" type="text" name="address" value="{{ patient.address }}" required>
+    </div>
+    <div class="form-group">
+        <label>Telefonnummer</label>
+        <input class="form-input" type="text" name="phone_number" value="{{ patient.phone_number }}" required>
+    </div>
+    <div class="form-group">
+        <label>Versicherungsnummer</label>
+        <input class="form-input" type="text" name="insurance_number" value="{{ patient.insurance_number }}" required>
+    </div>
+    <button type="submit" class="button">Speichern</button>
+    <a href="{% url 'patient_dashboard' %}" class="button" style="background-color: lightgrey;">Zurück zur Übersicht</a>
+</form>
+
+{% if status %}
+<div class="status-message">
+    {{ status }}
+</div>
+{% endif %}
+{% endblock %}

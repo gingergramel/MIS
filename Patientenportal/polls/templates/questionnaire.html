@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Fragebogen für Patienten</h2>
+<form method="post">
+    {% csrf_token %}
+    <label>Was ist Ihre Hauptbeschwerde?</label>
+    <select name="main_complaint">
+        <option value="">-- Bitte wählen --</option>
+        <option value="RUECKEN" {% if questionnaire.main_complaint == 'RUECKEN' %}selected{% endif %}>Rückenschmerzen</option>
+        <option value="KOPF" {% if questionnaire.main_complaint == 'KOPF' %}selected{% endif %}>Kopfschmerzen</option>
+        <option value="GELENK" {% if questionnaire.main_complaint == 'GELENK' %}selected{% endif %}>Gelenkschmerzen</option>
+        <option value="SONSTIGES" {% if questionnaire.main_complaint == 'SONSTIGES' %}selected{% endif %}>Sonstiges</option>
+    </select>
+    <br><br>
+    
+    <label>Wie lange haben Sie die Beschwerden schon?</label>
+    <input type="text" name="pain_duration" value="{{ questionnaire.pain_duration|default_if_none:'' }}"><br><br>
+    
+    <label>Wie oft treten die Beschwerden auf?</label>
+    <input type="text" name="pain_frequency" value="{{ questionnaire.pain_frequency|default_if_none:'' }}"><br><br>
+    
+    <label>Wie stark sind die Beschwerden?</label>
+    <input type="text" name="pain_intensity" value="{{ questionnaire.pain_intensity|default_if_none:'' }}"><br><br>
+    
+    <label>Wurden Sie wegen dieser Beschwerden schon behandelt?</label>
+    <input type="text" name="previous_treatment" value="{{ questionnaire.previous_treatment|default_if_none:'' }}"><br><br>
+    
+    <button type="submit">Absenden</button>
+</form>
+{% endblock %}

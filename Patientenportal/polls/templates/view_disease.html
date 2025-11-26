@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="
+  max-width: 700px;
+  margin: 3em auto;
+  background: #fff;
+  padding: 2em 3em;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+">
+  <h2 style="color:#2b6cb0;">Ihr Behandlungsplan</h2>
+
+  {% if disease %}
+    <p style="margin-top: 1em;"><strong>Krankheit / Diagnose:</strong><br>{{ disease.title }}</p>
+    <p style="margin-top: 1em;"><strong>Behandlungsplan:</strong><br>{{ disease.description|linebreaks }}</p>
+    <p style="margin-top: 1em; font-size: 0.9em; color: gray;">
+      Angelegt am {{ disease.created_at|date:"d.m.Y H:i" }}
+    </p>
+  {% else %}
+    <p>Für Sie wurde noch kein Behandlungsplan erstellt.</p>
+  {% endif %}
+
+  <div style="margin-top:2em;">
+    <a href="{% url 'patient_dashboard' %}" class="button" style="background-color: lightgrey;">Zurück zum Dashboard</a>
+  </div>
+</div>
+{% endblock %}

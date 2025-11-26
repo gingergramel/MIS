@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div>
+    <form method="post">
+        {% csrf_token %}
+        <input class="form-input" type="text" name="username" placeholder="Username">
+        <input class="form-input" type="password" name="password" placeholder="Password">
+        <button class="button" type="submit">Anmelden</button>
+        
+    </form>
+
+
+    <div>
+        {{ login_status }}
+</div>
+
+{% endblock content %}

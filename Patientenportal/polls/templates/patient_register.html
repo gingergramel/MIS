@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Patienten-Registrierung</h2>
+<form method="post">
+    {% csrf_token %}
+    <input class="form-input" type="text" name="first_name" placeholder="Vorname" required>
+    <input class="form-input" type="text" name="last_name" placeholder="Nachname" required>
+    <input class="form-input" type="text" name="username" placeholder="Username" required>
+    <input class="form-input" type="email" name="email" placeholder="Email" required>
+    <input class="form-input" type="password" name="password" placeholder="Password" required>
+    <input class="form-input" type="text" name="SVNR" placeholder="SVNR" required>
+    <input class="form-input" type="date" name="Geburtsdatum" placeholder="Geburtsdatum" required>
+    <button class="button" type="submit">Registrieren</button>
+</form>
+<div>
+    {{ registration_status }}
+</div>
+{% endblock content %}

@@ -1,0 +1,52 @@
+{% load static %}
+<html>
+    <head>
+        <title>First Django App</title>
+        <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+        <!-- Inline fallback styles to ensure gradient is visible even if external CSS is cached/not applied -->
+        <style>
+        body { background-color: rgb(142, 141, 141); }
+        nav { background-color: rgba(105, 105, 105, 0.8); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+        nav a.nav-btn { color: #e2e8f0; }
+        .content-wrap { background: rgba(255,255,255,0.85); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+        .logo-section { text-align: left; padding: 1rem 2rem; background: rgb(142, 141, 141); }
+        .sidebar-logo { height: 60px; object-fit: contain; }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <span class="menubutton">
+                <a class="nav-btn" href="{% url 'patient_register' %}">Patienten-Registrierung</a>
+                <a class="nav-btn" href="{% url 'practitioner_register' %}">Practitioner-Registrierung</a>
+            </span>
+ 
+ 
+                        {% if user.is_authenticated %}
+                        <span class="user-info">
+                            User:  {{ user }}
+                        </span>
+                        <span>
+                                <a class="nav-btn" href="/logout"> Logout</a>
+                        </span>
+                        {% else %}
+                        <span>
+                                <a class="nav-btn" href="{% url 'patient_login' %}">Patienten-Login</a>
+                                <a class="nav-btn" href="{% url 'practitioner_login' %}">Practitioner-Login</a>
+                        </span>
+                        {% endif %}
+           
+        </nav>
+
+        <div class="logo-section">
+            <img src="Logo.png" alt="Logo" class="sidebar-logo">
+        </div>
+       
+        <div class="content-wrap">
+        {% block content %}
+        Bitte Wählen sie eine Seite aus
+        {% endblock content %}
+        </div>
+   
+    </body>
+ 
+</html>

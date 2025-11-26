@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Practitioner Dashboard</h2>
+<h3>Ihre Patienten</h3>
+
+{% if patient_data %}
+  <ul>
+    {% for entry in patient_data %}
+      <li style="margin-bottom: 1em;">
+        <!-- Patientname als klickbarer Button -->
+        <button type="button" class="patient-toggle" style="
+          background-color: #4CAF50;
+          color: white;
+          padding: 10px 15px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          width: 100%;
+          text-align: left;
+          font-size: 1em;">
+          {{ entry.patient.user.first_name }} {{ entry.patient.user.last_name }}
+        </button>
+
+        <!-- Versteckte Detaildaten -->
+        <div class="patient-details" style="display: none; margin-top: 0.5em; margin-left: 1em;">
+          <ul>
+            <li>SVNR: {{ entry.patient.insurance_number }}</li>
+            <li>Geburtsdatum: {{ entry.patient.date_of_birth }}</li>
+
+            {% if entry.questionnaire %}
+              <li>Fragebogen:
+                <ul>
+                  <li>Hauptbeschwerde: {{ entry.questionnaire.get_main_complaint_display }}</li>
+                  <li>Schmerzdauer: {{ entry.questionnaire.pain_duration }}</li>
+                  <li>Häufigkeit: {{ entry.questionnaire.pain_frequency }}</li>
+                  <li>Schmerzintensität: {{ entry.questionnaire.pain_intensity }}</li>
+                  <li>Vorbehandlung: {{ entry.questionnaire.previous_treatment }}</li>
+                </ul>
+              </li>
+            {% else %}
+              <li>Kein Fragebogen ausgefüllt.</li>
+            {% endif %}
+            <li style="margin-top: 0.5em;">
+              <a class="button" href="{% url 'view_patient_messages' patient_id=entry.patient.id %}" style="margin-right: 1em;">
+                Nachrichten{% if entry.unread_messages %} ({{ entry.unread_messages }} ungelesen){% endif %}
+              </a>
+              <a class="button" href="{% url 'add_disease' patient_id=entry.patient.id %}">
+                Krankheit / Behandlungsplan anlegen
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Sie haben aktuell keine zugewiesenen Patienten.</p>
+{% endif %}
+
+<div style="margin-top:2em;">
+  <a class="button" href="{% url 'home' %}" style="background-color: lightgrey;">Zurück zur Startseite</a>
+</div>
+
+<!-- JavaScript für das Ein-/Ausklappen -->
+<script>
+  document.querySelectorAll('.patient-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      const details = button.nextElementSibling;
+      const isVisible = details.style.display === 'block';
+      details.style.display = isVisible ? 'none' : 'block';
+    });
+  });
+</script>
+{% endblock %}

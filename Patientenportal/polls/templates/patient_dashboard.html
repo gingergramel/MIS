@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Patienten-Dashboard</h2>
+
+{% if practitioner %}
+  <p>Ihr zugewiesener Arzt:</p>
+  <ul>
+    <li>Name: Dr. {{ practitioner.user.first_name }} {{ practitioner.user.last_name }}</li>
+    <li>Fachrichtung: {{ practitioner.specialization }}</li>
+    <li>Lizenznummer: {{ practitioner.license_number }}</li>
+    <li>Sprechzeiten: {{ practitioner.office_hours }}</li>
+  </ul>
+{% else %}
+  <p>Ihnen wurde noch kein Practitioner zugewiesen.</p>
+{% endif %}
+
+<div style="margin-top: 1.5em;">
+  
+  <a class="button" href="{% url 'edit_profile' %}" style="display:block; margin-bottom:0.5em;">Persönliche Daten bearbeiten</a>
+  {% if practitioner %}
+  <a class="button" href="{% url 'patient_messages' %}" style="display:block; margin-bottom:0.5em;">Nachrichten an Arzt</a>
+  <a class="button" href="{% url 'view_disease' %}" style="display: block; margin-bottom: 0.5em;">Behandlungsplan anzeigen</a>
+  {% endif %}
+  <a class="button" href="{% url 'questionnaire' %}" style="display:block; margin-bottom:0.5em;">Fragebogen ausfüllen/bearbeiten</a>
+</div>
+
+<a class="button" href="{% url 'home' %}" style="display:block; margin-bottom:0.5em;background-color: lightgray;">Zurück zur Startseite</a>
+
+{% endblock %}

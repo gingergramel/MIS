@@ -1,0 +1,336 @@
+
+/* =====================================================
+   Patientenportal – Stylesheet
+   Path expected by base.html:  static 'polls/style.css'
+   Design goals: clean, accessible, responsive
+   ===================================================== */
+
+/* --------- CSS Variables --------- */
+:root {
+  --bg: #f7f9fc;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-600: #1d4ed8;
+  --primary-700: #1e40af;
+  --accent: #10b981;
+  --danger: #dc2626;
+  --warning: #f59e0b;
+  --ring: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  --radius: 12px;
+  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
+  --shadow: 0 10px 15px -3px rgba(16, 24, 40, 0.1), 0 4px 6px -2px rgba(16, 24, 40, 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1020;
+    --surface: #121a2b;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+    --primary: #60a5fa;
+    --primary-600: #3b82f6;
+    --primary-700: #2563eb;
+    --accent: #34d399;
+    --danger: #f87171;
+    --warning: #fbbf24;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+    --shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+}
+
+/* --------- Global Reset & Base --------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: radial-gradient(1200px 600px at 10% -10%, rgba(37,99,235,0.05), transparent 40%),
+              radial-gradient(900px 500px at 110% 10%, rgba(16,185,129,0.06), transparent 45%),
+              var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--primary-600);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+img { max-width: 100%; display: block; }
+
+/* Focus styles for accessibility */
+:where(a, button, input, select, textarea, [tabindex]):focus {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: 8px;
+}
+
+/* --------- Layout --------- */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  nav {
+    background: rgba(18,26,43,0.6);
+    border-bottom-color: rgba(255,255,255,0.06);
+  }
+}
+
+.menubutton {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.user-info {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-right: .5rem;
+}
+
+.logo-section {
+  text-align: left;
+  padding: 1rem 2rem;
+  background: rgba(255,255,255,0.5);
+}
+
+.sidebar-logo {
+  height: 60px;
+  object-fit: contain;
+}
+
+.content-wrap {
+  max-width: 980px;
+  margin: 2rem auto;
+  padding: 1.25rem;
+}
+
+/* Card-like sections (used by view_disease, home sections) */
+.section,
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.25rem 1.5rem;
+}
+
+/* --------- Headings --------- */
+h1, h2, h3 {
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0 0 .5rem 0;
+}
+h1 { font-size: clamp(1.8rem, 2.5vw, 2.4rem); }
+h2 { font-size: clamp(1.35rem, 2vw, 1.75rem); color: var(--primary-700); }
+h3 { font-size: 1.15rem; color: var(--primary-700); }
+
+/* --------- Buttons --------- */
+.button,
+.nav-btn,
+.btn,
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .6rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: .01em;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.button:hover,
+.nav-btn:hover,
+.btn-primary:hover,
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+  background: var(--primary-600);
+}
+
+.button:active,
+.nav-btn:active,
+.btn:active,
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.button.secondary,
+.btn-secondary,
+a.button[style*="lightgrey"] {
+  background: transparent;
+  color: var(--primary-700);
+  border-color: var(--primary-600);
+}
+
+.button.secondary:hover,
+.btn-secondary:hover {
+  background: rgba(37,99,235,0.08);
+}
+
+.button.ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: rgba(0,0,0,0.1);
+}
+.button.ghost:hover { background: rgba(0,0,0,0.06); }
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+/* Map bootstrap-like classes used in templates (without pulling Bootstrap) */
+.mt-3 { margin-top: 1rem !important; }
+.mt-5 { margin-top: 2rem !important; }
+.container { max-width: 800px; margin: 0 auto; padding: 0 1rem; }
+.btn-primary { background: var(--primary); }
+
+/* --------- Forms --------- */
+form { width: 100%; }
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: .35rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select,
+textarea,
+.form-control,
+.form-input {
+  width: 100%;
+  padding: .65rem .8rem;
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+input::placeholder { color: var(--muted); }
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary-600);
+  box-shadow: var(--ring);
+}
+
+button[type="submit"] {
+  margin-top: .5rem;
+}
+
+/* Inline status messages */
+.status-message {
+  margin-top: 1rem;
+  padding: .75rem 1rem;
+  border-radius: 10px;
+  background: rgba(16,185,129,0.12);
+  color: #065f46;
+  border: 1px solid rgba(16,185,129,0.25);
+}
+
+/* Alerts (used in practitioner_login on failure) */
+.alert {
+  padding: .75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  margin: 1rem 0;
+}
+.alert-danger {
+  background: rgba(220,38,38,0.1);
+  color: #7f1d1d;
+  border-color: rgba(220,38,38,0.25);
+}
+
+/* --------- Utility --------- */
+.text-muted { color: var(--muted); }
+.flex { display: flex; }
+.grid { display: grid; gap: 1rem; }
+.hidden { display: none !important; }
+
+/* Simple responsive grid helper */
+@media (min-width: 640px) {
+  .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* --------- Page-specific touch-ups --------- */
+/* Home */
+.home-hero {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: center;
+}
+
+/* Patient Dashboard list */
+ul {
+  padding-left: 1.2rem;
+}
+li { margin: .25rem 0; }
+
+/* View Disease wrapper (remove inline need) */
+.plan-wrap {
+  max-width: 700px;
+  margin: 3em auto;
+  background: var(--surface);
+  padding: 2em 3em;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.plan-wrap h2 { color: var(--primary-700); }
+
+/* Footers or minor text */
+.small { font-size: .875rem; color: var(--muted); }
+
+/* --------- Print-friendly adjustments --------- */
+@media print {
+  nav { display: none; }
+  .button, .nav-btn { display: none !important; }
+  body { background: #fff; }
+  .content-wrap { margin: 0; max-width: 100%; }
+  a { color: #000; text-decoration: underline; }
+}
