@@ -48,6 +48,12 @@ jobs:
           build-args: |
             DATABASE_URL=${{ secrets.DATABASE_URL }}
 
+      # Login to Azure (required before deploy)
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       # automatically deploy web app    
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
