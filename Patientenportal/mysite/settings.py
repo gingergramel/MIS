@@ -4,7 +4,7 @@ Django settings for mysite project.
 import os
 from pathlib import Path
 from urllib.parse import urlparse, parse_qsl
-import dj_database_url
+#import dj_database_url
 #from dotenv import load_dotenv
  
 #load_dotenv()
@@ -83,12 +83,29 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
 
+def inferDatabaseConfiguration():
+    if os.getenv("DATABASE_URL"):
+        tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
+        print("neon db")
+        return {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': tmpPostgres.path.replace('/', ''),
+            'USER': tmpPostgres.username,
+            'PASSWORD': tmpPostgres.password,
+            'HOST': tmpPostgres.hostname,
+            'PORT': 5432,
+            'OPTIONS': dict(parse_qsl(tmpPostgres.query)),
+        }
+    else:
+        print("sqlite db")
+        return {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+ 
+ 
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.getenv("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    "default": inferDatabaseConfiguration()
 }
 
 
