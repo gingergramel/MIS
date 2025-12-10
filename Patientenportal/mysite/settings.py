@@ -1,13 +1,14 @@
 """
 Django settings for mysite project.
 """
-
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+from urllib.parse import urlparse, parse_qsl
 import dj_database_url
-# Load environment variables
-load_dotenv()
+#from dotenv import load_dotenv
+ 
+#load_dotenv()
+ 
 
 # -----------------------------------------------------------------------------------
 # BASE SETTINGS
@@ -80,7 +81,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # DATABASE (Correct Neon PostgreSQL config)
 # -----------------------------------------------------------------------------------
 
-import dj_database_url
+
 
 DATABASES = {
     'default': dj_database_url.parse(
